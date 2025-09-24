@@ -28,7 +28,9 @@ async function main() {
     {
       role: "system",
       content:
-        "You are a smart personal assistant who answers the asked questions. You can use tools when helpful. Tool: webSearch({query: string}) for latest info.",
+        `You are a smart personal assistant who answers the asked questions. You can use tools when helpful.
+         Tool: webSearch({query: string}) for latest info.
+         Current date and time: ${new Date().toUTCString()}`,
     },
     // { role: "user", content: "What is the current weather in pune" },
   ];

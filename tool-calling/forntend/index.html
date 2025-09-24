@@ -9,12 +9,8 @@
 
   <body class="bg-neutral-900 text-white overflow-x-hidden">
     <section>
-      <main class="container mx-auto max-w-3xl pb-44">
-        <div class="my-6 bg-neutral-800 p-3 rounded-xl ml-auto max-w-fit">
-          Hi, how are you?
-        </div>
-
-        <div class="max-w-fit">I am GPT, a chatbot.</div>
+      <main class="container mx-auto max-w-3xl pb-44 px-4" id="chat-container">
+        <!-- <div class="max-w-fit">I am GPT, a chatbot.</div> -->
 
         <div
           class="fixed inset-x-0 bottom-0 flex items-center justify-center bg-neutral-900"
@@ -23,11 +19,12 @@
             <textarea
               class="w-full resize-none outline-none p-3"
               name="message"
-              id=""
+              id="input"
               rows="2"
             ></textarea>
             <div class="flex items-center justify-end">
               <button
+                id="ask-btn"
                 class="bg-white p-4 py-1 text-black rounded-full cursor-pointer hover:bg-gray-300"
               >
                 Ask

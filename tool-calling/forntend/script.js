@@ -12,11 +12,14 @@ async function generate(text) {
   chatContainer.appendChild(message);
   input.value = "";
 
-  console.log("User:", text);
   // call server
   const assistantMessage = await callServer(text);
 
-  console.log("Assistant:", assistantMessage);
+  const msgElement = document.createElement("div");
+  msgElement.className = `max-w-fit`;
+  msgElement.textContent = assistantMessage;
+  chatContainer.appendChild(msgElement);
+  input.value = "";
 }
 
 async function callServer(inputText) {

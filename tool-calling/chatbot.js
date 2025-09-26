@@ -1,17 +1,19 @@
-import Groq from "groq-sdk/index.mjs";
+import Cerebras from "@cerebras/cerebras_cloud_sdk";
 import env from "dotenv";
 import { tavily } from "@tavily/core";
 
 env.config();
 
 const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+const cerebras = new Cerebras({
+  apiKey: process.env.CEREBRAS_API_KEY,
+});
 
 async function webSearch({ query }) {
   console.log("Searching the web...");
 
   const response = await tvly.search(query);
-  // console.log("Response: ", response);
 
   const finalResponse = response.results
     .map((result) => result.content)
@@ -32,7 +34,7 @@ Q: What is the capital of India?
 A: The capital of India is New Delhi.
 
 If a question requires fresh or real-time data, you can use available tools to find it. You have access to the following tool:
-searchWeb(query:string) - Use this to search the web for the latest information and real-time data
+webSearch(query:string) - Use this to search the web for the latest information and real-time data
 Decide when to use youe own knowledge and when to use tool.
 
 However, do not show the raw function call. Instead, act as if the search has already been executed and provide the final human-friendly answer in plain English.
@@ -67,8 +69,9 @@ ${new Date().toUTCString()}
   messages.push({ role: "user", content: userMessage });
 
   while (true) {
-    const completion = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
+    const completion = await cerebras.chat.completions.create({
+      model: "qwen-3-235b-a22b-instruct-2507",
+      max_completion_tokens: 20000,
       temperature: 0,
       messages,
       tools: [

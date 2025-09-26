@@ -11,10 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@cerebras/cerebras_cloud_sdk": "^1.50.0",
     "@tavily/core": "^0.5.11",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
-    "express": "^5.1.0",
-    "groq-sdk": "^0.30.0"
+    "express": "^5.1.0"
   }
 }

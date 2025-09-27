@@ -1,10 +1,12 @@
 import Cerebras from "@cerebras/cerebras_cloud_sdk";
 import env from "dotenv";
 import { tavily } from "@tavily/core";
+import NodeCache from "node-cache";
 
 env.config();
 
 const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
+const myCache = new NodeCache({ stdTTL: 60 * 60 * 24 }); // cache for 24 hours
 
 const cerebras = new Cerebras({
   apiKey: process.env.CEREBRAS_API_KEY,
@@ -22,8 +24,8 @@ async function webSearch({ query }) {
   return finalResponse;
 }
 
-export async function generate(userMessage) {
-  const messages = [
+export async function generate(userMessage, threadId) {
+  const baseMessages = [
     {
       role: "system",
       content: `You are my smart personal assistant. Your job is to answer questions in clear, plain English, just like you are talking to a smart friend. Keep answers natural, simple, and helpful. Whenever possible, add short examples so the explanation is easy to understand. Avoid unnecessary jargon or over-explaining unless specifically asked.
@@ -42,13 +44,10 @@ However, do not show the raw function call. Instead, act as if the search has al
 For example:
 Q: What’s the weather in Mumbai right now?
 A: As of Sep 26, 2025, 09:00 UTC, Mumbai’s temperature is around 30°C with clear skies and moderate humidity.
-
 Q: What is the current price of Bitcoin?
 A: As of Sep 26, 2025, 09:00 UTC, Bitcoin is trading at about $63,500.
-
 Q: Who won yesterday’s IPL match?
 A: On Sep 25, 2025, Mumbai Indians defeated Chennai Super Kings by 5 wickets.
-
 Q: What are today’s top trending tech news?
 A: As of Sep 26, 2025, top headlines include Apple opening iPhone 17 pre-orders, Google announcing new AI features in Gmail, and OpenAI updating ChatGPT with faster response times.
 
@@ -65,6 +64,8 @@ ${new Date().toUTCString()}
 `,
     },
   ];
+
+  const messages = myCache.get(threadId) ?? baseMessages;
 
   messages.push({ role: "user", content: userMessage });
 
@@ -101,6 +102,7 @@ ${new Date().toUTCString()}
     const toolCalls = completion.choices[0].message.tool_calls;
 
     if (!toolCalls) {
+      myCache.set(threadId, messages);
       return completion.choices[0].message.content;
     }
 

@@ -69,7 +69,15 @@ ${new Date().toUTCString()}
 
   messages.push({ role: "user", content: userMessage });
 
+  const MAX_RETRIES = 10;
+  let count = 0;
+
   while (true) {
+    if (count > MAX_RETRIES) {
+      return "I'm sorry, I'm having trouble processing your request right now. Please try again.";
+    }
+    count++;
+
     const completion = await cerebras.chat.completions.create({
       model: "qwen-3-235b-a22b-instruct-2507",
       max_completion_tokens: 20000,

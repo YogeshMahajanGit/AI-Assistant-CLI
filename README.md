@@ -1,15 +1,19 @@
 🧠 AI Personal Assistant CLI
 
-A simple Node.js CLI chatbot powered by Groq LLMs and Tavily Web Search API.
+A simple Node.js CLI chatbot powered by Groq LLM & Cerebras Cloud LLM and Tavily Web Search API.
 It can answer your questions, search the web for the latest information, and act like a smart personal assistant — all from your terminal.
 
 🚀 Features
 
-Interactive CLI chatbot (type your questions in the terminal).
+Added a Chatbot interface(frontend)
+
+<!-- Interactive CLI chatbot (type your questions in the terminal). -->
 
 Powered by Groq LLaMA-3.3-70B for intelligent responses.
 
 Integrated with Tavily API for real-time web search.
+
+Node cache for memory
 
 Auto-handles both LLM replies and tool calls.
 
@@ -22,10 +26,8 @@ Ask a question
 
 Web search in action
 
-Exit with bye
-
 (You can replace these with real screenshots or a short GIF recording of the terminal using ScreenToGif
- or asciinema
+or asciinema
 ).
 
 📦 Installation
@@ -35,11 +37,9 @@ Clone the repo:
 git clone https://github.com/your-username/ai-personal-assistant-cli.git
 cd ai-personal-assistant-cli
 
-
 Install dependencies:
 
 npm install
-
 
 Create a .env file in the project root:
 
@@ -52,14 +52,12 @@ Run the chatbot:
 
 npm start
 
-
 Example interaction:
 
 Enter your question: what is current date
 Searching the web...
 Response: ...
 Assistant result: Today is September 5, 2025
-
 
 Type bye to exit:
 
@@ -77,11 +75,11 @@ dotenv (environment variables)
 
 📂 Project Structure
 .
-├── index.js       # Main CLI assistant
-├── package.json   # Project dependencies
-├── .env           # API keys (not committed)
-├── assets/        # Screenshots & GIFs for README
-└── README.md      # Documentation
+├── index.js # Main CLI assistant
+├── package.json # Project dependencies
+├── .env # API keys (not committed)
+├── assets/ # Screenshots & GIFs for README
+└── README.md # Documentation
 
 🔑 Environment Variables
 
